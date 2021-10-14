@@ -1,3 +1,4 @@
+#[derive(Debug)]
 pub enum Currency {
 	Usd,
 	Eur,
@@ -9,6 +10,7 @@ pub enum Currency {
 	Aud,
 }
 
+#[derive(Debug)]
 pub struct Convert {
 	from: Currency,
 	to: Currency,
