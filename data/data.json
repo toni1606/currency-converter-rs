@@ -1,3 +1,9 @@
 {
-	"test": 1
+	"converts": [
+		{
+			"to": "All",
+			"from": "Eur",
+			"rate": 125
+		}
+	]
 }

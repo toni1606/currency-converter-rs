@@ -7,7 +7,7 @@ pub fn run() {
 		Err(e)		=> panic!("error while reading the file: {}", e)
 	};
 
-
+	dbg!(raw_file_data);
 }
 
 fn read_file(filename: String) -> Result<String, Box<dyn std::error::Error>> {
