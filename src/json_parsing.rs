@@ -48,6 +48,10 @@ fn parse_array(array: &str) -> Result<Vec<Convert>, Box<dyn std::error::Error>> 
 
 	for element in &mut array {
 		(*element).remove(0);
+
+		if (*element).chars().nth(element.len() - 1).unwrap() == '}' {
+			(*element).pop();
+		}
 	}
 
 	Ok(vec![])
