@@ -43,8 +43,12 @@ fn parse_array(array: &str) -> Result<Vec<Convert>, Box<dyn std::error::Error>> 
 	if array.chars().nth(0).unwrap() != '[' || array.chars().nth(array.len() - 1).unwrap() != ']' {
 		return Err(Box::new(Error::new(ErrorKind::InvalidData, "invalid JSON array")));
 	}
-	let array: Vec<&str> = array[1..array.len() - 1].split("},").collect();
-	let mut array: Vec<String> = array.iter().map(|c| String::from(*c)).collect();
+
+	let mut array: Vec<String> = array[1..array.len() - 1].split("},")
+														  .collect::<Vec<&str>>()
+														  .iter()
+														  .map(|c| String::from(*c))
+														  .collect();
 
 	for element in &mut array {
 		(*element).remove(0);
