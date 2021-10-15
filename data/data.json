@@ -4,6 +4,11 @@
 			"to": "All",
 			"from": "Eur",
 			"rate": 125
+		},
+		{
+			"to": "All",
+			"from": "Usd",
+			"rate": 110
 		}
 	]
 }
