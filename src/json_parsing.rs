@@ -1,7 +1,9 @@
 use std::fs::File;
 use std::io::Read;
 use std::io::{Error, ErrorKind};
+
 use crate::converter::Convert;
+use substring::Substring;
 
 pub fn run() {
 	let mut raw_file_data = match read_file(String::from("./data/data.json")) {
@@ -44,18 +46,27 @@ fn parse_array(array: &str) -> Result<Vec<Convert>, Box<dyn std::error::Error>> 
 		return Err(Box::new(Error::new(ErrorKind::InvalidData, "invalid JSON array")));
 	}
 
+	// remove '[' and ']' + split objects into a Vec<String>
 	let mut array: Vec<String> = array[1..array.len() - 1].split("},")
 														  .collect::<Vec<&str>>()
 														  .iter()
 														  .map(|c| String::from(*c))
 														  .collect();
 
+	// remove '{' and '}' if present
 	for element in &mut array {
 		(*element).remove(0);
 
 		if (*element).chars().nth(element.len() - 1).unwrap() == '}' {
 			(*element).pop();
 		}
+	}
+
+	for element in array {
+		// find "to"
+		let t = element.substring(element.find("\"").unwrap() + 1, element[1..].find("\"").unwrap() + 1);
+		
+
 	}
 
 	Ok(vec![])
