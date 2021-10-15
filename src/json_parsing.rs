@@ -16,8 +16,10 @@ pub fn run() {
         Err(e)	=> panic!("Error while parsing data: {}", e)
     };
 
-    
+    // TODO: read data from stdin -> find neeeded Convert and convert into currency if not return Err()
 }
+
+// TODO: create function to read data from stdin
 
 fn read_file(filename: String) -> Result<String, Box<dyn std::error::Error>> {
     let mut file_handler = File::open(filename)?;
