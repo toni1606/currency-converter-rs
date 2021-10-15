@@ -1,6 +1,6 @@
 use std::fs::File;
 use std::io::Read;
-use std::io::{Error, ErrorKind};
+use std::io::{Error, ErrorKind, stdin};
 
 use crate::converter::{Convert, Currency};
 use substring::Substring;
@@ -8,7 +8,7 @@ use substring::Substring;
 pub fn run() {
     let mut raw_file_data = match read_file(String::from("./data/data.json")) {
         Ok(v)	=> v,
-        Err(e)	=> panic!("error while reading the file: {}", e)
+        Err(e)	=> panic!("Error while reading the file: {}", e)
     };
 
     let data = match parse_data(&mut raw_file_data) {
@@ -16,7 +16,7 @@ pub fn run() {
         Err(e)	=> panic!("Error while parsing data: {}", e)
     };
 
-    println!("{:?}", data);
+    
 }
 
 fn read_file(filename: String) -> Result<String, Box<dyn std::error::Error>> {

@@ -67,7 +67,7 @@ impl FromStr for  Currency {
 			"Cat"	=> Ok(Self::Cad),
 			"Cny"	=> Ok(Self::Cny),
 			"Aud"	=> Ok(Self::Aud),
-			&_		=> Err(Error::new(ErrorKind::InvalidData, "invalid field in JSON object"))
+			&_		=> Err(Error::new(ErrorKind::InvalidData, "error while parsing: invalid currency"))
 		}
 	}
 }
