@@ -31,7 +31,6 @@ fn parse_data(json: &mut String) -> Result<Vec<Convert>, Box<dyn std::error::Err
 	json.retain(|c| !c.is_whitespace());
 
 	let array_identifier = "\"converts\"";
-	let converts: Vec<Convert> = vec![];
 
 	if json.chars().nth(0).unwrap() == '{' && json.contains(array_identifier) {
 		let end_index = json.find(array_identifier).unwrap() + array_identifier.len();
@@ -63,10 +62,17 @@ fn parse_array(array: &str) -> Result<Vec<Convert>, Box<dyn std::error::Error>> 
 	}
 
 	for element in array {
-		// find "to"
-		let t = element.substring(element.find("\"").unwrap() + 1, element[1..].find("\"").unwrap() + 1);
-		
+		// find  data
+		let fields = element.split(",");
 
+		for field in fields {
+			// println!("{}", field);
+			let end_of_name = field[1..].find(":").unwrap();
+			let identifier = field.substring(field.find("\"").unwrap(), end_of_name + 1); 
+			let value = field.substring(field.find("\"").unwrap() + end_of_name + 2, field.len());
+
+			println!("identifier: {}, value: {}", identifier, value);
+		}
 	}
 
 	Ok(vec![])
