@@ -72,7 +72,7 @@ impl FromStr for  Currency {
 			"All"	=> Ok(Self::All),
 			"Jpy"	=> Ok(Self::Jpy),
 			"Gbp"	=> Ok(Self::Gbp),
-			"Cat"	=> Ok(Self::Cad),
+			"Cad"	=> Ok(Self::Cad),
 			"Cny"	=> Ok(Self::Cny),
 			"Aud"	=> Ok(Self::Aud),
 			&_		=> Err(Error::new(ErrorKind::InvalidData, "invalid currency"))
