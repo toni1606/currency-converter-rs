@@ -5,42 +5,19 @@ use std::io::{Error, ErrorKind, stdin};
 use crate::converter::{Convert, Currency};
 use substring::Substring;
 
-pub fn run(json_path: &str) {
-    let converts = match parse_data(
-        &mut match read_file(String::from(json_path)) {
-            Ok(v)	=> v,
-            Err(e)	=> panic!("Error while reading the file: {}", e)
-        }
-    ) {
-        Ok(v)	=> v,
-        Err(e)	=> panic!("Error while parsing data: {}", e)
-    };
-
-    // TODO: read data from stdin -> find neeeded Convert and convert into currency if not return Err()
-    let from_to = match read_config_data() {
-        Ok(v)   => v,
-        Err(e)  => panic!("Error while reading from stdin: {}", e)
-    };
+pub fn run(json_path: &str) -> Result<f64, Box<dyn std::error::Error>> {
+    let converts = parse_data(&mut read_file(String::from(json_path))?)?;
+    let config = read_config_data()?;
 
     for c in converts {
-        if *c.get_to() == *from_to.get_to() && *c.get_from() == *from_to.get_from() {
-            let converted = match read_value() {
-                Ok(v)   => c.convert(v, false),
-                Err(e)  => panic!("{}", e)
-            };
-
-            println!("{}", converted);
-            break;
-        } else if *c.get_to() == *from_to.get_from() && *c.get_from() == *from_to.get_to() {
-            let converted = match read_value() {
-                Ok(v)   => c.convert(v, true),
-                Err(e)  => panic!("{}", e)
-            };
-
-            println!("{}", converted);
-            break;
+        if *c.get_to() == *config.get_to() && *c.get_from() == *config.get_from() {
+            return Ok(c.convert(read_value()?, false));
+        } else if *c.get_to() == *config.get_from() && *c.get_from() == *config.get_to() {
+            return Ok(c.convert(read_value()?, true));
         }
     }
+
+    Err(Box::new(Error::new(ErrorKind::InvalidData, "the value could not be converted")))
 }
 
 fn read_config_data() -> Result<Convert, Box<dyn std::error::Error>> {
@@ -60,10 +37,8 @@ fn read_config_data() -> Result<Convert, Box<dyn std::error::Error>> {
 }
 
 fn read_file(filename: String) -> Result<String, Box<dyn std::error::Error>> {
-    let mut file_handler = File::open(filename)?;
     let mut out = String::new();
-
-    file_handler.read_to_string(&mut out)?;
+    File::open(filename)?.read_to_string(&mut out)?;
     
     Ok(out)
 }
