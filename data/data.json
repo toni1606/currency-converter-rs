@@ -9,6 +9,21 @@
 			"to": "All",
 			"from": "Usd",
 			"rate": 121.58
+		},
+		{
+			"to": "Usd",
+			"from": "Eur",
+			"rate": 1.16
+		},
+		{
+			"to": "Cad",
+			"from": "Usd",
+			"rate": 1.24
+		},
+		{
+			"to": "Cad",
+			"from": "Eur",
+			"rate": 1.44
 		}
 	]
 }
