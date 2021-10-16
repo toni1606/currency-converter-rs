@@ -6,8 +6,6 @@ use crate::converter::{Convert, Currency};
 use substring::Substring;
 
 pub fn run(json_path: &str) {
-    // let mut raw_file_data = ;
-
     let converts = match parse_data(
         &mut match read_file(String::from(json_path)) {
             Ok(v)	=> v,
@@ -19,19 +17,25 @@ pub fn run(json_path: &str) {
     };
 
     // TODO: read data from stdin -> find neeeded Convert and convert into currency if not return Err()
-    let from_to = match read_data() {
+    let from_to = match read_config_data() {
         Ok(v)   => v,
         Err(e)  => panic!("Error while reading from stdin: {}", e)
     };
 
     for c in converts {
         if *c.get_to() == *from_to.get_to() && *c.get_from() == *from_to.get_from() {
+            let converted = match read_value() {
+                Ok(v)   => c.convert(v),
+                Err(e)  => panic!("{}", e)
+            };
+
+            println!("{}", converted);
             break;
         }
     }
 }
 
-fn read_data() -> Result<Convert, Box<dyn std::error::Error>> {
+fn read_config_data() -> Result<Convert, Box<dyn std::error::Error>> {
     let mut convert = Convert::new(Currency::All, Currency::All, 1.0);
     
     let mut raw_data = String::new();
@@ -54,6 +58,15 @@ fn read_file(filename: String) -> Result<String, Box<dyn std::error::Error>> {
     file_handler.read_to_string(&mut out)?;
     
     Ok(out)
+}
+
+fn read_value() -> Result<f64, Box<dyn std::error::Error>> {
+    let mut s = String::new();
+    println!("Enter value to be converted: ");
+    stdin().read_line(&mut s)?;
+    let value: f64 = s.trim().parse()?;
+
+    Ok(value)
 }
 
 fn parse_data(json: &mut String) -> Result<Vec<Convert>, Box<dyn std::error::Error>>{

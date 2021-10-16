@@ -3,12 +3,12 @@
 		{
 			"to": "All",
 			"from": "Eur",
-			"rate": 125
+			"rate": 0.0082
 		},
 		{
 			"to": "All",
 			"from": "Usd",
-			"rate": 110
+			"rate": 0.0095
 		}
 	]
 }

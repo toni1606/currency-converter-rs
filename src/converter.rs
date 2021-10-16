@@ -52,6 +52,10 @@ impl Convert {
 	pub fn set_rate(&mut self, rate: f64) {
 		self.rate = rate;
 	}
+
+	pub fn convert(&self, val: f64) -> f64 {
+		val / self.rate
+	}
 }
 
 impl FromStr for  Currency {
