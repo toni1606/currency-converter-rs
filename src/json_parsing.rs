@@ -17,9 +17,29 @@ pub fn run() {
     };
 
     // TODO: read data from stdin -> find neeeded Convert and convert into currency if not return Err()
+    let convert = match read_data() {
+        Ok(v)   => v,
+        Err(e)  => panic!("Error while reading from stdin: {}", e)
+    };
+
+    println!("{:?}", convert);
 }
 
-// TODO: create function to read data from stdin
+fn read_data() -> Result<Convert, Box<dyn std::error::Error>> {
+    let mut convert = Convert::new(Currency::All, Currency::All, 1.0);
+    
+    let mut raw_data = String::new();
+    println!("To: ");
+    stdin().read_line(&mut raw_data)?;
+    convert.set_to(raw_data.trim().parse()?);
+
+    raw_data = String::new();
+    println!("From: ");
+    stdin().read_line(&mut raw_data)?;
+    convert.set_from(raw_data.trim().parse()?);
+
+    Ok(convert)
+}
 
 fn read_file(filename: String) -> Result<String, Box<dyn std::error::Error>> {
     let mut file_handler = File::open(filename)?;

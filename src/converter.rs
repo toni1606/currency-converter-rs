@@ -29,27 +29,27 @@ impl Convert {
 		}
 	}
 
-	fn get_from(&self) -> &Currency {
+	pub fn get_from(&self) -> &Currency {
 		&self.from
 	}
 
-	fn get_to(&self) -> &Currency {
+	pub fn get_to(&self) -> &Currency {
 		&self.to
 	}
 
-	fn get_rate(&self) -> f64 {
+	pub fn get_rate(&self) -> f64 {
 		self.rate
 	}
 
-	fn set_from(&mut self, from: Currency) {
+	pub fn set_from(&mut self, from: Currency) {
 		self.from = from;
 	}
 
-	fn set_to(&mut self, to: Currency) {
+	pub fn set_to(&mut self, to: Currency) {
 		self.to = to;
 	}
 
-	fn set_rate(&mut self, rate: f64) {
+	pub fn set_rate(&mut self, rate: f64) {
 		self.rate = rate;
 	}
 }
@@ -67,7 +67,7 @@ impl FromStr for  Currency {
 			"Cat"	=> Ok(Self::Cad),
 			"Cny"	=> Ok(Self::Cny),
 			"Aud"	=> Ok(Self::Aud),
-			&_		=> Err(Error::new(ErrorKind::InvalidData, "error while parsing: invalid currency"))
+			&_		=> Err(Error::new(ErrorKind::InvalidData, "invalid currency"))
 		}
 	}
 }
