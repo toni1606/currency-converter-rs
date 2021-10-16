@@ -53,8 +53,12 @@ impl Convert {
 		self.rate = rate;
 	}
 
-	pub fn convert(&self, val: f64) -> f64 {
-		val / self.rate
+	pub fn convert(&self, val: f64, reverse: bool) -> f64 {
+		if reverse {
+			val / self.rate
+		} else {
+			val * self.rate
+		}
 	}
 }
 

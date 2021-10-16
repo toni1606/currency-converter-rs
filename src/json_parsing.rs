@@ -25,7 +25,15 @@ pub fn run(json_path: &str) {
     for c in converts {
         if *c.get_to() == *from_to.get_to() && *c.get_from() == *from_to.get_from() {
             let converted = match read_value() {
-                Ok(v)   => c.convert(v),
+                Ok(v)   => c.convert(v, false),
+                Err(e)  => panic!("{}", e)
+            };
+
+            println!("{}", converted);
+            break;
+        } else if *c.get_to() == *from_to.get_from() && *c.get_from() == *from_to.get_to() {
+            let converted = match read_value() {
+                Ok(v)   => c.convert(v, true),
                 Err(e)  => panic!("{}", e)
             };
 
