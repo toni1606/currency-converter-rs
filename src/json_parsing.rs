@@ -5,24 +5,30 @@ use std::io::{Error, ErrorKind, stdin};
 use crate::converter::{Convert, Currency};
 use substring::Substring;
 
-pub fn run() {
-    let mut raw_file_data = match read_file(String::from("./data/data.json")) {
-        Ok(v)	=> v,
-        Err(e)	=> panic!("Error while reading the file: {}", e)
-    };
+pub fn run(json_path: &str) {
+    // let mut raw_file_data = ;
 
-    let data = match parse_data(&mut raw_file_data) {
+    let converts = match parse_data(
+        &mut match read_file(String::from(json_path)) {
+            Ok(v)	=> v,
+            Err(e)	=> panic!("Error while reading the file: {}", e)
+        }
+    ) {
         Ok(v)	=> v,
         Err(e)	=> panic!("Error while parsing data: {}", e)
     };
 
     // TODO: read data from stdin -> find neeeded Convert and convert into currency if not return Err()
-    let convert = match read_data() {
+    let from_to = match read_data() {
         Ok(v)   => v,
         Err(e)  => panic!("Error while reading from stdin: {}", e)
     };
 
-    println!("{:?}", convert);
+    for c in converts {
+        if *c.get_to() == *from_to.get_to() && *c.get_from() == *from_to.get_from() {
+            break;
+        }
+    }
 }
 
 fn read_data() -> Result<Convert, Box<dyn std::error::Error>> {

@@ -1,7 +1,7 @@
 use std::str::FromStr;
 use std::io::{Error, ErrorKind};
 
-#[derive(Debug)]
+#[derive(Debug, PartialEq)]
 pub enum Currency {
 	Usd,
 	Eur,
@@ -13,7 +13,7 @@ pub enum Currency {
 	Aud,
 }
 
-#[derive(Debug)]
+#[derive(Debug, PartialEq)]
 pub struct Convert {
 	from: Currency,
 	to: Currency,
