@@ -21,7 +21,7 @@ pub fn run(json_path: &str) -> Result<f64, Box<dyn std::error::Error>> {
 }
 
 fn read_config_data() -> Result<Convert, Box<dyn std::error::Error>> {
-    let mut convert = Convert::new(Currency::All, Currency::All, 1.0);
+    let mut convert = Convert::new(Currency::ALL, Currency::ALL, 1.0);
     
     let mut raw_data = String::new();
     println!("To: ");
@@ -93,8 +93,8 @@ fn parse_array(array: &str) -> Result<Vec<Convert>, Box<dyn std::error::Error>> 
         let fields = element.split(",");
 
         // temporary storage for the Convert::new() method
-        let mut to = Currency::All;
-        let mut from = Currency::All;
+        let mut to = Currency::ALL;
+        let mut from = Currency::ALL;
         let mut rate = 0f64;
 
         for field in fields {

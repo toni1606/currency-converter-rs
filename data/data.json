@@ -1,28 +1,28 @@
 {
 	"converts": [
 		{
-			"to": "All",
-			"from": "Eur",
+			"to": "ALL",
+			"from": "EUR",
 			"rate": 104.81
 		},
 		{
-			"to": "All",
-			"from": "Usd",
+			"to": "ALL",
+			"from": "USD",
 			"rate": 121.58
 		},
 		{
-			"to": "Usd",
-			"from": "Eur",
+			"to": "USD",
+			"from": "EUR",
 			"rate": 1.16
 		},
 		{
-			"to": "Cad",
-			"from": "Usd",
+			"to": "CAD",
+			"from": "USD",
 			"rate": 1.24
 		},
 		{
-			"to": "Cad",
-			"from": "Eur",
+			"to": "CAD",
+			"from": "EUR",
 			"rate": 1.44
 		}
 	]

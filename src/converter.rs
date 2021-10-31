@@ -3,14 +3,14 @@ use std::io::{Error, ErrorKind};
 
 #[derive(Debug, PartialEq)]
 pub enum Currency {
-	Usd,
-	Eur,
-	All,
-	Jpy,
-	Gbp,
-	Cad,
-	Cny,
-	Aud,
+	USD,
+	EUR,
+	ALL,
+	JPY,
+	GBP,
+	CAD,
+	CNY,
+	AUD,
 }
 
 #[derive(Debug, PartialEq)]
@@ -67,14 +67,14 @@ impl FromStr for  Currency {
 	
 	fn from_str(s: &str) -> Result<Self, Self::Err> {
 		match s {
-			"Usd"	=> Ok(Self::Usd),
-			"Eur"	=> Ok(Self::Eur),
-			"All"	=> Ok(Self::All),
-			"Jpy"	=> Ok(Self::Jpy),
-			"Gbp"	=> Ok(Self::Gbp),
-			"Cad"	=> Ok(Self::Cad),
-			"Cny"	=> Ok(Self::Cny),
-			"Aud"	=> Ok(Self::Aud),
+			"USD"	=> Ok(Self::USD),
+			"EUR"	=> Ok(Self::EUR),
+			"ALL"	=> Ok(Self::ALL),
+			"JPY"	=> Ok(Self::JPY),
+			"GBP"	=> Ok(Self::GBP),
+			"CAD"	=> Ok(Self::CAD),
+			"CNY"	=> Ok(Self::CNY),
+			"AUD"	=> Ok(Self::AUD),
 			&_		=> Err(Error::new(ErrorKind::InvalidData, "invalid currency"))
 		}
 	}
