@@ -10,6 +10,7 @@ pub fn run(json_path: &str) -> Result<f64, Box<dyn std::error::Error>> {
     let config = read_config_data()?;
 
     for c in converts {
+        // checks in which way to convert and converts
         if *c.get_to() == *config.get_to() && *c.get_from() == *config.get_from() {
             return Ok(c.convert(read_value()?, false));
         } else if *c.get_to() == *config.get_from() && *c.get_from() == *config.get_to() {
@@ -56,10 +57,15 @@ fn parse_data(json: &mut String) -> Result<Vec<Convert>, Box<dyn std::error::Err
     // remove whitespaces from String
     json.retain(|c| !c.is_whitespace());
 
+    // array name
     let array_identifier = "\"converts\"";
 
+    // check for valid json file (begins with '{', and needs to have an array named `array_identifier`)
     if json.chars().nth(0).unwrap() == '{' && json.contains(array_identifier) {
+        // index of the '"' at the end of the identifier
         let end_index = json.find(array_identifier).unwrap() + array_identifier.len();
+
+        // parse only the data
         parse_array(&json[end_index + 1..json.len() - 1])
     } else {
         Err(Box::new(Error::new(ErrorKind::InvalidData, "invalid JSON data!")))
@@ -67,6 +73,7 @@ fn parse_data(json: &mut String) -> Result<Vec<Convert>, Box<dyn std::error::Err
 }
 
 fn parse_array(array: &str) -> Result<Vec<Convert>, Box<dyn std::error::Error>> {
+    // checks for beginning '[' and end ']'
     if array.chars().nth(0).unwrap() != '[' || array.chars().nth(array.len() - 1).unwrap() != ']' {
         return Err(Box::new(Error::new(ErrorKind::InvalidData, "invalid JSON array")));
     }
@@ -92,7 +99,7 @@ fn parse_array(array: &str) -> Result<Vec<Convert>, Box<dyn std::error::Error>> 
         // spltit the associative array into fields
         let fields = element.split(",");
 
-        // temporary storage for the Convert::new() method
+        // temporary storage needed from `Convert::new()`
         let mut to = Currency::ALL;
         let mut from = Currency::ALL;
         let mut rate = 0f64;
